@@ -88,7 +88,11 @@ func (g *GoGenetic[Phenotype]) competition() *[]Phenotype {
 		}
 
 		if rand.Float32() < g.MutationRate {
-			pb = g.Mutate(pb)
+			if rand.Float32() < 0.5 {
+				pa = g.Mutate(pa)
+			} else {
+				pb = g.Mutate(pb)
+			}
 		}
 
 		nextGeneration[i+1] = pb
@@ -132,6 +136,7 @@ func (g *GoGenetic[Phenotype]) Evolve() int {
 		g.population = newPopulation
 	}
 
+	g.Generation += 1
 	return g.Generation
 }
 
